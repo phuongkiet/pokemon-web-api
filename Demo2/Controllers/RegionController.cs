@@ -19,14 +19,24 @@ namespace Demo2.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("categories")]
-        public async Task<IActionResult> GetCategories()
+        [HttpGet("regions")]
+        public async Task<IActionResult> GetRegions()
         {
             var result = await _regionService.GetRegions();
             if (!result.Any())
                 return NotFound();
 
             return Ok(_mapper.Map<List<RegionResponse>>(result));
+        }
+        [HttpGet("{regionId}")]
+        public async Task<IActionResult> GetRegionById(int regionId)
+        {
+            if(!_regionService.RegionExists(regionId))
+                return NotFound();
+
+            var region = await _regionService.GetRegionById(regionId);
+
+            return Ok(_mapper.Map<RegionResponse>(region));
         }
 
         [HttpPost]

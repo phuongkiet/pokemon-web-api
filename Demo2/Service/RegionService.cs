@@ -53,7 +53,7 @@ namespace Demo2.Service
         }
         public async Task<Region> GetRegionById(int regionId)
         {
-            return await _regionRepository.GetByIntId(regionId);
+            return await _regionRepository.GetRegion(regionId);
         }
     }
 }
