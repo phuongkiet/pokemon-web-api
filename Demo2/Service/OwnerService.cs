@@ -7,7 +7,7 @@ namespace Demo2.Service
     public interface IOwnerService
     {
         public Task<ICollection<Owner>> GetOwners();
-        public Task CreateOwner(Owner Owner);
+        public Task CreateOwner(int regionId, Owner Owner);
 
         public Task UpdateOwner(Owner Owner);
 
@@ -29,9 +29,9 @@ namespace Demo2.Service
             _mapper = mapper;
         }
 
-        public async Task CreateOwner(Owner owner)
+        public async Task CreateOwner(int regionId, Owner owner)
         {
-            await _ownerRepository.Add(owner);
+            await _ownerRepository.CreateOwner(regionId, owner);
         }
 
         public async Task DeleteOwner(Owner owner)

@@ -58,7 +58,9 @@ namespace Demo2.Controllers
 
 /*            ownerMap.Region = await _regionService.GetRegionById(regionId);
 */
-            if (_ownerService.CreateOwner(ownerMap).Equals(null))
+            var ownerToCreate = _ownerService.CreateOwner(regionId, ownerMap);
+
+            if (ownerToCreate == null)
             {
                 ModelState.AddModelError("", "Something went wrong while savin");
                 return StatusCode(500, ModelState);
