@@ -24,6 +24,7 @@ namespace Demo2.Controllers
         }
 
         [HttpGet("owners")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Owner>))]
         public async Task<IActionResult> GetOwners()
         {
             var result = await _ownerService.GetOwners();
@@ -33,6 +34,8 @@ namespace Demo2.Controllers
             return Ok(_mapper.Map<List<OwnerResponse>>(result));
         }
         [HttpGet("get-pokemons-by-owner")]
+        [ProducesResponseType(200, Type = typeof(Owner))]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> GetPokemonByOwner([FromQuery] int ownerId)
         {
             var result = await _ownerService.GetPokemonByOwner(ownerId);
@@ -41,6 +44,8 @@ namespace Demo2.Controllers
             return Ok(_mapper.Map<List<PokemonResponse>>(result));
         }
         [HttpPost]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> CreateOwner([FromQuery] int regionId, [FromBody] OwnerResponse ownerCreate)
         {
             if (ownerCreate == null)
@@ -51,8 +56,8 @@ namespace Demo2.Controllers
 
             var ownerMap = _mapper.Map<Owner>(ownerCreate);
 
-            ownerMap.Region = await _regionService.GetRegionById(regionId);
-
+/*            ownerMap.Region = await _regionService.GetRegionById(regionId);
+*/
             if (_ownerService.CreateOwner(ownerMap).Equals(null))
             {
                 ModelState.AddModelError("", "Something went wrong while savin");
@@ -63,6 +68,7 @@ namespace Demo2.Controllers
         }
 
         [HttpPut("{ownerId}")]
+        
         public async Task<IActionResult> UpdateOwner(int ownerId,
             [FromBody] OwnerResponse updatedOwner)
         {
