@@ -43,6 +43,31 @@ namespace Demo2.Controllers
                 return NotFound();
             return Ok(_mapper.Map<List<PokemonResponse>>(result));
         }
+
+        [HttpGet("getOwnersV2")]
+        [ProducesResponseType(200, Type = typeof(Owner))]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> GetOwnersV2()
+        {
+            var result = await _ownerService.GetOwnersV2();
+            if (!result.Any())
+                return NotFound();
+
+            return Ok(_mapper.Map<List<OwnerResponse>>(result));
+        }
+
+        [HttpGet("getOwnersV3")]
+        [ProducesResponseType(200, Type = typeof(Owner))]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> GetOwnersV3()
+        {
+            var result = await _ownerService.GetOwnersV3();
+            if (!result.Any())
+                return NotFound();
+
+            return Ok(_mapper.Map<List<OwnerResponse>>(result));
+        }
+
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]

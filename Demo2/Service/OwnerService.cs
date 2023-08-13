@@ -18,6 +18,9 @@ namespace Demo2.Service
         public Task<ICollection<Pokemon>> GetPokemonByOwner(int ownerId);
 
         public Task<Owner> GetOwnerById(int ownerId);
+
+        public Task<ICollection<Owner>> GetOwnersV2();
+        public Task<ICollection<Owner>> GetOwnersV3();
     }
     public class OwnerService : IOwnerService
     {
@@ -47,6 +50,18 @@ namespace Demo2.Service
         public async Task<ICollection<Owner>> GetOwners()
         {
             var owner = await _ownerRepository.GetAll();
+            return owner.ToList();
+        }
+
+        public async Task<ICollection<Owner>> GetOwnersV2()
+        {
+            var owner = await _ownerRepository.GetOwnersV2();
+            return owner.ToList();
+        }
+
+        public async Task<ICollection<Owner>> GetOwnersV3()
+        {
+            var owner = await _ownerRepository.GetOwnersV3();
             return owner.ToList();
         }
 

@@ -10,6 +10,5 @@ namespace Demo2.Entity
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<Owner> Owners { get; set; }
     }
 }

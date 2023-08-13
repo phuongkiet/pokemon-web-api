@@ -52,19 +52,18 @@ namespace Demo2.Controllers
             if (categoryUpdated == null)
                 return BadRequest(ModelState);
 
-            if (categoryId != categoryUpdated.Id)
-                return BadRequest(ModelState);
-
             if (!_categoryService.CategoriesExists(categoryId))
                 return NotFound();
 
             try
             {
-                // Map CategoryUpdateRequest to Category entity
-                Category categoryToUpdate = _mapper.Map<Category>(categoryUpdated);
+                // Get the existing category entity
+                Category existingCategory = await _categoryService.GetCategoryById(categoryId);
 
-                // Update the category through the service
-                await _categoryService.UpdateCategory(categoryToUpdate);
+                // Update the name field based on the request body
+                existingCategory.Name = categoryUpdated.Name;
+
+                await _categoryService.UpdateCategory(existingCategory);
             }
             catch (Exception ex)
             {
@@ -77,6 +76,7 @@ namespace Demo2.Controllers
 
             return NoContent();
         }
+
         [HttpDelete("{categoryId}")]
         public async Task<IActionResult> DeleteCategory(int categoryId)
         {
